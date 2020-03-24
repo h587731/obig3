@@ -15,20 +15,28 @@ public class ClientSort {
         int range = 10000;
 
 
-        String tableHeader = String.format("  f(n) = k*n |k = log_b_(l) |l = largest value; b= base.      range = 0 -> "+range+ "\n\n|%-10s|%-15s|%-13s|%-13s|%-13s|%-10s|", "n", "Times executed", "Total time", "Average Time", "T(n) = c*f(n)" , "c =");
+        String tableHeader =  String.format("  f(n) = n log(n)      range = 0 -> "+range+ "\n\n|%-10s|%-15s|%-13s|%-13s|%-13s|%-10s|", "n", "Times executed", "Total time", "Average Time", "T(n) = c*f(n)" , "c =");
+
+        System.out.println("\nQuicksort: "+tableHeader);
+        for(int i = 0, n = nStartValue; i < 6 ; n = n*2, i++)
+            runAndPrint(QuickSort::sort, RandomList.make(n, range), runs ,n, n*(Math.log(n) / Math.log(2))  );
+
+        System.out.println("\nInsortQuicksort: "+tableHeader);
+        for(int i = 0, n = nStartValue; i < 6 ; n = n*2, i++)
+            runAndPrint(NewQuickSort::sort, RandomList.make(n, range), runs ,n, n*(Math.log(n) / Math.log(2))  );
+
+
+        System.out.println("\nMergesort:"+tableHeader);
+        for(int i = 0, n = nStartValue ; i < 6 ; n=n*2, i++)
+            runAndPrint(MergeSort::sort, RandomList.make(n, range), runs ,n, n*(Math.log(n) / Math.log(2))  );
+
+
+        tableHeader =  String.format("  f(n) = k*n |k = log_b_(l) |l = largest value; b= base.      range = 0 -> "+range+ "\n\n|%-10s|%-15s|%-13s|%-13s|%-13s|%-10s|", "n", "Times executed", "Total time", "Average Time", "T(n) = c*f(n)" , "c =");
 
         System.out.println("\nRadixsort:"+tableHeader);
         for(int i = 0, n = nStartValue ; i < 6 ; n=n*2, i++)
             runAndPrint(RadixSort::sort, RandomList.make(n, range), runs ,n, n*(Math.log(range) / Math.log(10))  );
 
-       tableHeader = String.format("  f(n) = n log(n)      range = 0 -> "+range+ "\n\n|%-10s|%-15s|%-13s|%-13s|%-13s|%-10s|", "n", "Times executed", "Total time", "Average Time", "T(n) = c*f(n)" , "c =");
-        System.out.println("\nMergesort:"+tableHeader);
-        for(int i = 0, n = nStartValue ; i < 6 ; n=n*2, i++)
-            runAndPrint(MergeSort::sort, RandomList.make(n, range), runs ,n, n*(Math.log(n) / Math.log(2))  );
-
-        System.out.println("\nQuicksort: "+tableHeader);
-        for(int i = 0, n = nStartValue; i < 6 ; n = n*2, i++)
-            runAndPrint(QuickSort::sort, RandomList.make(n, range), runs ,n, n*(Math.log(n) / Math.log(2))  );
 
         tableHeader = String.format("     f(n) = n^2      range = 0 -> "+range+ "\n\n|%-10s|%-15s|%-13s|%-13s|%-13s|%-10s|", "n", "Times executed","Total time", "Average Time", "T(n) = c*f(n)" , "c =");
 

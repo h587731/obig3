@@ -12,8 +12,8 @@ public class QuickSort {
         int pivot = array[left + (right - left) / 2], i = left, j = right;
 
         while (i <= j){
-            for(;array[i] < pivot;i++);
-            while(array[j] > pivot)j--;
+            while(array[i] < pivot) i++;
+            while(array[j] > pivot) j--;
             if (i <= j){
                 int temp = array[i];
                 array[i] = array[j];
@@ -22,10 +22,7 @@ public class QuickSort {
                 j--;
             }
         }
-
-        if (left < j)
             sort(array, left, j);
-        if (right > i)
             sort(array, i, right);
     }
 }

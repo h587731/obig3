@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../dat102/DobbelKjedetOrdnetListeMidtPekerFyllUt/DobbelKjedetOrdnetListeMidtPekerFyllUt.iml" filepath="$PROJECT_DIR$/../dat102/DobbelKjedetOrdnetListeMidtPekerFyllUt/DobbelKjedetOrdnetListeMidtPekerFyllUt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Oving5.iml" filepath="$PROJECT_DIR$/Oving5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../dat102/SorteringOgSoekingFyllUt/SorteringOgSoekingFyllUt.iml" filepath="$PROJECT_DIR$/../dat102/SorteringOgSoekingFyllUt/SorteringOgSoekingFyllUt.iml" />
+    </modules>
+  </component>
+</project>

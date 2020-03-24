@@ -1,7 +1,7 @@
 package oppgave4.client2;
 
 import oppgave4.random.RandomList;
-import oppgave4.sort.MergeSort;
+import oppgave4.sort.*;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -10,77 +10,48 @@ import java.util.function.Consumer;
 
 public class ClientSort {
     public static void main(String[] args) {
-        Integer[] copy, array = RandomList.make(2550, 10000);
+        int initial_n_value = 5000;
+        int runs =  20;
+        int range = 1000000;
 
-        runAndPrint(MergeSort::sort, array, 20 );
+        String tableHeader = String.format("  f(n) = n log(n)      range = 0 -> "+range+ "\n|%-10s|%-15s|%-13s|%-13s|%-13s|%-10s|", "n", "Times executed", "Total time", "Average Time", "T(n) = c*f(n)" , "c =");
 
-//        System.out.print("Random             : "+Arrays.toString(array)+"\n");
-//
-//        System.out.print("QuickSort          : ");
-//        copy = Arrays.copyOf(array, array.length);
-//        QuickSort.sort(copy);
-//        System.out.println(Arrays.toString(copy));
-//
-//        System.out.print("MergeSort          : ");
-//        copy = Arrays.copyOf(array, array.length);
-//        MergeSort.sort(copy);
-//        System.out.println(Arrays.toString(copy));
-//
-//        System.out.print("BubbleSort         : ");
-//        copy = Arrays.copyOf(array, array.length);
-//        BubbleSort.sort(copy);
-//        System.out.println(Arrays.toString(copy));
-//
-//        System.out.print("InsertionSort      : ");
-//        copy = Arrays.copyOf(array, array.length);
-//        InsertionSort.sort(copy);
-//        System.out.println(Arrays.toString(copy));
-//
-//        System.out.print("SelectionSort      : ");
-//        copy = Arrays.copyOf(array, array.length);
-//        SelectionSort.sort(copy);
-//        System.out.println(Arrays.toString(copy));
+        System.out.println("\nMergesort:"+tableHeader);
+        for(int i =0, n=initial_n_value ; i < 6 ; n=n*2, i++)
+            runAndPrint(MergeSort::sort, RandomList.make(n, 10000), runs ,n, n*(Math.log(n) / Math.log(2))  );
+
+        System.out.println("\nQuicksort: "+tableHeader);
+        for(int i =0, n=initial_n_value; i < 6 ; n=n*2, i++)
+            runAndPrint(QuickSort::sort, RandomList.make(n, range), runs ,n, n*(Math.log(n) / Math.log(2))  );
+
+        tableHeader = String.format("     f(n) = n^2      range = 0 -> "+range+ "\n|%-10s|%-15s|%-13s|%-13s|%-13s|%-10s|", "n", "Times executed","Total time", "Average Time", "T(n) = c*f(n)" , "c =");
+
+        System.out.println("\nSelectionSort:"+tableHeader);
+        for(int i =0, n=initial_n_value/10; i < 6 ; n=n+n, i++)
+            runAndPrint(SelectionSort::sort, RandomList.make(n, range), runs ,n,Math.pow(n,2)  );
+
+        System.out.println("\nInsertionSort:"+tableHeader);
+        for(int i =0, n=initial_n_value/10; i < 6 ; n=n+n, i++)
+            runAndPrint(InsertionSort::sort, RandomList.make(n, range), runs ,n, Math.pow(n,2)  );
+
+        System.out.println("\nBubbleSort:"+tableHeader);
+        for(int i =0, n=initial_n_value/10; i < 6 ; n=n+n, i++)
+            runAndPrint(BubbleSort::sort, RandomList.make(n, range), runs ,n, Math.pow(n,2)  );
 
     }
 
 
-    public static void runAndPrint(Consumer<Integer[] > sortFunction, Integer[] array, int runs){
-        Integer[] copy = array;
-        long average= 0;
+    public static void runAndPrint(Consumer<Integer[] > sortFunction, Integer[] array, int runs, int n, double fofn  ){
 
+        double average= 0;
         for(int i = 0 ; i<runs; i++){
-            copy = Arrays.copyOf(array, array.length);
             Instant start = Instant.now();
-            sortFunction.accept(copy);
+            sortFunction.accept(Arrays.copyOf(array, array.length));
             Instant finish = Instant.now();
-
-            long time =  Duration.between(start, finish).toNanos();
-            System.out.println(time+" ns run #"+ runs);
-            average = average + time;
-
+            average = average + Duration.between(start, finish).toNanos();
         }
 
-        Object[][] table = new String[4][];
-        table[0] = new String[] { "n", "Iterations", "Average", "Theoretical time c*f(n) " };
-        table[1] = new String[] { "bar2", "foo2", "baz2" };
-        table[2] = new String[] { "baz3", "bar3", "foo3" };
-        table[3] = new String[] { "foo4", "bar4", "baz4" };
-
-        for (final Object[] row : table) {
-            System.out.format("%-15s%-15s%-15s\n", row);
-        }
-
-
-        System.out.print("Sorted            : "+Arrays.toString(copy)+"\n");
-        System.out.println((average/runs)+"ns Average");
-
-
-
-
-
-
-        System.out.print("Sorted            : "+Arrays.toString(array)+"\n");
-
+        System.out.println(String.format("|%10d|%15s|%11.4f s|%10.2f ms|c*%11.0f|%10.2f|", n, runs,average/1000000000 , (average/runs)/1000000,fofn ,(average/fofn) ));
 
     }
 

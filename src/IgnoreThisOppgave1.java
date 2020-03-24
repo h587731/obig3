@@ -3,7 +3,7 @@ import java.math.BigInteger;
 
 
 
-public class Oppgave1 {
+public class IgnoreThisOppgave1 {
 
 
     public static void main(String[] args) {
@@ -12,9 +12,6 @@ public class Oppgave1 {
 
 
         System.out.println(sum1a(100));
-
-
-
         int n = 35;
 
         System.out.println("Starting 1b with An = A"+ n );
